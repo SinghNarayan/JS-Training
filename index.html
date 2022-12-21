@@ -8,6 +8,31 @@
     <title>Document</title>
 
     <style>
+        .input-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .input1 {
+            padding: 10px;
+            width: 500px;
+            margin-top: 10px;
+            background-color: azure;
+            color: black;
+        }
+
+        textarea {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 500px;
+            padding: 10px;
+            background-color: azure;
+            color: black;
+        }
+
         .card {
             width: 400px;
             height: 450px;
@@ -25,22 +50,61 @@
             font-size: 18px;
             border: 1px solid white;
         }
+
+        button {
+            padding: 10px;
+            color: black;
+            border: 1px solid black;
+            background-color: bisque;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
 <body>
+    <div class="input-form">
+        <label for="Name">Name</label>
+        <input type="text" name="Name" class="input1" id="Name">
+        <label for="Description">Description</label>
+        <input type="text" name="Description" class="input1" id="Description">
+        <label for="Age">Age</label>
+        <input type="number" class="input1" name="Age" id="Age">
+        <label for="address">Address</label>
+        <textarea name="address" id="address" cols="30" rows="10"></textarea>
+        <label for="skills">skills</label>
+        <div class="">
+            <input type="checkbox" name="skills" id="skills" value="coding">
+            <label for="coding">coding</label>
+        </div>
+        <div class="">
+            <input type="checkbox" name="skills" id="skills" value="chess">
+            <label for="chess">chess</label>
+        </div>
+        <div class="">
+            <input type="checkbox" name="skills" id="skills" value="Cricket">
+            <label for="Cricket">Cricket</label>
+        </div>
+        <div class="">
+            <input type="checkbox" name="skills" id="skills" value="Travelling">
+            <label for="Travelling">Travelling</label>
+        </div>
+        
+        <button class="" id="createCard" onclick="createCard();">Submit</button>
+    </div>
     <div class="main">
 
     </div>
     <script>
-        var src = ''
+        var src = '';
+        var cardsData = [];
         function css(element, style) {
             for (const property in style)
                 element.style[property] = style[property];
         }
-        var arr = [{ name: "Narayan Singh", age: '23', Skills: ['Cricket', 'Anime', 'Movies'], "address": 'Moga, Punjab 142056', 'desc': 'Angular Developer' },
-        { name: "Prince Bawa", age: '25', Skills: ['Cricket', 'Chess', "Coding"], "address": 'Amritsar, Punjab 142090', 'desc': 'React Developer' },
-        { name: "Sumit Virdi", age: '24', Skills: ['Cricket', 'Volleyball'], "address": 'Sangrur, Punjab 122034', 'desc': 'Web Developer' }];
+        // var arr = [{ name: "Narayan Singh", age: '23', Skills: ['Cricket', 'Anime', 'Movies'], "address": 'Moga, Punjab 142056', 'desc': 'Angular Developer' },
+        // { name: "Prince Bawa", age: '25', Skills: ['Cricket', 'Chess', "Coding"], "address": 'Amritsar, Punjab 142090', 'desc': 'React Developer' },
+        // { name: "Sumit Virdi", age: '24', Skills: ['Cricket', 'Volleyball'], "address": 'Sangrur, Punjab 122034', 'desc': 'Web Developer' },
+        // { name: "Sumit Virdi", age: '24', Skills: ['Cricket', 'Volleyball'], "address": 'Sangrur, Punjab 122034', 'desc': 'Web Developer' }];
 
         var main = document.querySelector('.main');
         css(main, {
@@ -54,82 +118,97 @@
             'margin': '0px',
             'overflow': 'hidden'
         });
-
-
-
-        for (let j = 0; j < arr.length; j++) {
-            var cardContainer = document.createElement('DIV');
-            cardContainer.classList.add('card');
-            main.appendChild(cardContainer);
-            var img = document.createElement('IMG');
-            img.setAttribute('alt', 'User Image');
-            img.src = 'https://picsum.photos/200';
-            // img.setAttribute('width','150px');
-            // img.setAttribute('height','150px');
-            css(img,
-                {
-                    'height': '150px',
-                    'width': '150px',
-                    'margin-top': '4px',
-                    'padding': '5px',
-                    'border': '1px solid white',
-                    'border-radius': '50%'
-                });
-            cardContainer.appendChild(img);
-            // var nameContainer = document.createElement('DIV');
-            // main.appendChild(nameContainer);
-            // css(nameContainer ,
-            // {   'height': 'auto',
-            //     'width': '350px',
-            // });
-            // nameContainer.classList.add('cardName');
-            var text = document.createElement('p');
-            text.innerHTML = arr[j].name;
-            css(text,
-                {
-                    'color': 'Lightblue',
-                    'text-transform': 'uppercase',
-                    'text-align': 'center',
-                    'font-size': '20px',
-                    'font-weight': '600',
-                    'padding': '0px 10px'
-                });
-            cardContainer.appendChild(text);
-            var address = document.createElement('p');
-            address.innerHTML = `<small>${arr[j].address}</small>`;
-            css(address,
-                {
-                    'color': 'lightblue',
-                    'text-align': 'center',
-                    'font-weight': '600',
-                    'padding': '0px 10px'
-                });
-            cardContainer.appendChild(address);
-
-            var hobbies = document.createElement('ul');
-            hobbies.classList.add('hobbies')
-            css(hobbies, {
-                'list-style': 'none',
-            })
-            // var skillSet = ['Cricket','Chess','Coding','Anime','Mobile-Games']
-            for (let i = 0; i < arr[j].Skills.length; i++) {
-                var li = document.createElement('li');
-                li.appendChild(document.createTextNode(arr[j].Skills[i]));
-                hobbies.appendChild(li);
+        var cardContainer = document.createElement('DIV');
+        var img = document.createElement('IMG');
+        var text = document.createElement('p');
+        var hobbies = document.createElement('ul');
+        var li = document.createElement('li');
+                     
+        function showRecords(arr) {
+            console.log(arr.length);
+            if(arr.length){
+                for (let j = 0; j < arr.length; j++) {
+                cardContainer.classList.add('card');
+                main.appendChild(cardContainer);
+                img.setAttribute('alt', 'User Image');
+                img.src = 'https://picsum.photos/200';
+                css(img,{'height': '150px','width': '150px','margin-top': '4px','padding': '5px','border': '1px solid white','border-radius': '50%'});
+                cardContainer.appendChild(img);
+                if(arr[j].name){
+                text.innerHTML = arr[j].name;
+                css(text,
+                    {
+                        'color': 'Lightblue',
+                        'text-transform': 'uppercase',
+                        'text-align': 'center',
+                        'font-size': '20px',
+                        'font-weight': '600',
+                        'padding': '0px 10px'
+                    });
+                cardContainer.appendChild(text);
+                }
+                if(arr[j].address){
+                    var address = document.createElement('p');
+                address.innerHTML = `<small>${arr[j].address}</small>`;
+                css(address,
+                    {
+                        'color': 'lightblue',
+                        'text-align': 'center',
+                        'font-weight': '600',
+                        'padding': '0px 10px'
+                    });
+                cardContainer.appendChild(address);
+                }
+                if(arr[j].Skills && arr[j].Skills.length){
+                hobbies.classList.add('hobbies')
+                css(hobbies, {
+                    'list-style': 'none',
+                })
+                for (let i = 0; i < arr[j].Skills.length; i++) {
+                    li.appendChild(document.createTextNode(arr[j].Skills[i]));
+                    hobbies.appendChild(li);
+                }
+                cardContainer.appendChild(hobbies);
+                }
+                if(arr[j].desc){
+                    var description = document.createElement('p');
+                description.innerHTML = `${arr[j].desc}`;
+                css(description,
+                    {
+                        'color': 'lightblue',
+                        'text-align': 'center',
+                        'font-weight': '600',
+                        'padding': '0px 10px',
+                        'margin-top': '40px'
+                    });
+                cardContainer.appendChild(description);
+                }
             }
-            cardContainer.appendChild(hobbies);
-            var description = document.createElement('p');
-            description.innerHTML = `${arr[j].desc}`;
-            css(description,
-                {
-                    'color': 'lightblue',
-                    'text-align': 'center',
-                    'font-weight': '600',
-                    'padding': '0px 10px',
-                    'margin-top': '40px'
-                });
-            cardContainer.appendChild(description);
+        
+            }
         }
+            function createCard() {
+            let name = document.getElementById('Name').value;
+            let address = document.getElementById('address').value;
+            let description = document.getElementById('Description').value;
+            let age = document.getElementById('Age').value;
+            let skills = document.getElementById('skills').value;
+            var create = new createObject(name, address, description, skills, age);
+        }
+        function createObject(name, address, description, skills, age) {
+            
+                this.name=name; 
+                this.address=address;
+                this.desc=description;
+                this.Skills=skills;
+                this.age=age;
+                if(cardsData.length){
+                    // let cardContainerc = document.getElementsByClassName('card');
+                    // cardContainerc.remove();
+                }
+            cardsData.push(this);
+            showRecords(cardsData);
+        }        
     </script>
 </body>
 
