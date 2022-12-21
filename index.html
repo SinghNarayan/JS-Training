@@ -8,12 +8,25 @@
     <title>Document</title>
 
     <style>
-        .input-form {
+        .parent{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            overflow: hidden;
+        }
+         .input-form {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 10px;
+            width: 600px;
+            height: auto;
+            border-radius: 20px;
+            border: 2px solid aqua;
+            background-color: #f4f4f4;
         }
 
         .input1 {
@@ -22,6 +35,15 @@
             margin-top: 10px;
             background-color: azure;
             color: black;
+            border-radius: 20px;
+        }
+        label input {
+           height: 18px;
+           width: 18px;
+            margin-top: 10px;
+            background-color: azure;
+            color: black;
+            border-radius: 20px;
         }
 
         textarea {
@@ -31,6 +53,7 @@
             padding: 10px;
             background-color: azure;
             color: black;
+            border-radius: 20px;
         }
 
         .card {
@@ -62,34 +85,30 @@
 </head>
 
 <body>
-    <div class="input-form">
-        <label for="Name">Name</label>
-        <input type="text" name="Name" class="input1" id="Name">
-        <label for="Description">Description</label>
-        <input type="text" name="Description" class="input1" id="Description">
-        <label for="Age">Age</label>
-        <input type="number" class="input1" name="Age" id="Age">
-        <label for="address">Address</label>
-        <textarea name="address" id="address" cols="30" rows="10"></textarea>
-        <label for="skills">skills</label>
-        <div class="">
-            <input type="checkbox" name="skills" id="skills" value="coding">
-            <label for="coding">coding</label>
+    <div class="parent">
+        <div class="input-form">
+            <label for="Name">Name</label>
+            <input type="text" name="Name" class="input1" id="Name">
+            <label for="Description">Description</label>
+            <input type="text" name="Description" class="input1" id="Description">
+            <label for="Age">Age</label>
+            <input type="number" class="input1" name="Age" id="Age">
+            <label for="address">Address</label>
+            <textarea name="address" id="address" cols="30" rows="10"></textarea>
+            <label>skills</label>
+            <label for="coding">
+                <input type="checkbox" id="coding" name="skills" value="coding"> Coding
+            </label>
+            <label for="Cricket">
+                <input type="checkbox" id="Cricket" name="skills" value="Cricket"> Cricket
+            </label>
+            <label for="Chess">
+                <input type="checkbox" id="Chess" name="skills" value="Chess"> Chess
+            </label>
+    
+    
+            <button class="" id="createCard" onclick="createCard();">Submit</button>
         </div>
-        <div class="">
-            <input type="checkbox" name="skills" id="skills" value="chess">
-            <label for="chess">chess</label>
-        </div>
-        <div class="">
-            <input type="checkbox" name="skills" id="skills" value="Cricket">
-            <label for="Cricket">Cricket</label>
-        </div>
-        <div class="">
-            <input type="checkbox" name="skills" id="skills" value="Travelling">
-            <label for="Travelling">Travelling</label>
-        </div>
-
-        <button class="" id="createCard" onclick="createCard();">Submit</button>
     </div>
     <div class="main">
 
@@ -122,7 +141,6 @@
         var img = document.createElement('IMG');
         var text = document.createElement('p');
         var hobbies = document.createElement('ul');
-        var li = document.createElement('li');
 
         function showRecords(arr) {
             console.log(arr.length);
@@ -164,7 +182,8 @@
                         css(hobbies, {
                             'list-style': 'none',
                         })
-                        for (let i = 0; i < arr[j].Skills.length; i++) {
+                        for (let i = 0; i < (arr[j].Skills).length; i++) {
+                            var li = document.createElement('li');
                             li.appendChild(document.createTextNode(arr[j].Skills[i]));
                             hobbies.appendChild(li);
                         }
@@ -192,8 +211,16 @@
             let address = document.getElementById('address').value;
             let description = document.getElementById('Description').value;
             let age = document.getElementById('Age').value;
-            let skills = document.getElementById('skills').value;
-            var create = new createObject(name, address, description, skills, age);
+
+            let skills = document.getElementsByName('skills');
+            var selected = [];
+            for (var i = 0; i < skills.length; i++) {
+                if (skills[i].checked) {
+                    selected.push(skills[i].value);
+                }
+            }
+            console.log(selected);
+            var create = new createObject(name, address, description, selected, age);
         }
         function createObject(name, address, description, skills, age) {
 
@@ -202,11 +229,13 @@
             this.desc = description;
             this.Skills = skills;
             this.age = age;
+            console.log(skills);
             if (cardsData.length) {
                 // let cardContainer = document.getElementsByClassName('card');
                 // cardContainer.parentNode.removeChild(cardContainer);
             }
             cardsData.push(this);
+            console.log(cardsData);
             showRecords(cardsData);
         }        
     </script>
