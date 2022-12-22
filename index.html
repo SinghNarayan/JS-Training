@@ -10,11 +10,14 @@
     <style>
         .parent{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             width: 100%;
             overflow: hidden;
+        }
+        .checkbox{
+            display: inline-block;
         }
          .input-form {
             display: flex;
@@ -22,7 +25,7 @@
             justify-content: center;
             align-items: center;
             padding: 10px;
-            width: 600px;
+            width: 500px;
             height: auto;
             border-radius: 20px;
             border: 2px solid aqua;
@@ -31,7 +34,7 @@
 
         .input1 {
             padding: 10px;
-            width: 500px;
+            width: 400px;
             margin-top: 10px;
             background-color: azure;
             color: black;
@@ -49,7 +52,7 @@
         textarea {
             margin-top: 10px;
             margin-bottom: 10px;
-            width: 500px;
+            width: 400px;
             padding: 10px;
             background-color: azure;
             color: black;
@@ -83,7 +86,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="parent">
         <div class="input-form">
@@ -96,19 +98,29 @@
             <label for="address">Address</label>
             <textarea name="address" id="address" cols="30" rows="10"></textarea>
             <label>skills</label>
-            <label for="coding">
-                <input type="checkbox" id="coding" name="skills" value="coding"> Coding
-            </label>
-            <label for="Cricket">
-                <input type="checkbox" id="Cricket" name="skills" value="Cricket"> Cricket
-            </label>
-            <label for="Chess">
-                <input type="checkbox" id="Chess" name="skills" value="Chess"> Chess
-            </label>
-    
-    
+            <div class="checkbox">
+                <label for="coding">
+                    <input type="checkbox" id="coding" name="skills" value="coding"> Coding
+                </label>
+                <label for="Cricket">
+                    <input type="checkbox" id="Cricket" name="skills" value="Cricket"> Cricket
+                </label>
+                <label for="Chess">
+                    <input type="checkbox" id="Chess" name="skills" value="Chess"> Chess
+                </label>
+                <label for="Gaming">
+                    <input type="checkbox" id="Gaming" name="skills" value="Gaming"> Gaming
+                </label>
+                <label for="Travelling">
+                    <input type="checkbox" id="Travelling" name="skills" value="Travelling"> Travelling
+                </label>
+                <label for="Sleeping">
+                    <input type="checkbox" id="Sleeping" name="skills" value="Sleeping"> Sleeping
+                </label>
+            </div>
             <button class="" id="createCard" onclick="createCard();">Submit</button>
         </div>
+        
     </div>
     <div class="main">
 
@@ -137,13 +149,12 @@
             'margin': '0px',
             'overflow': 'hidden'
         });
+       
+        function showRecords(arr) {
         var cardContainer = document.createElement('DIV');
         var img = document.createElement('IMG');
         var text = document.createElement('p');
         var hobbies = document.createElement('ul');
-
-        function showRecords(arr) {
-            console.log(arr.length);
             if (arr.length) {
                 for (let j = 0; j < arr.length; j++) {
                     cardContainer.classList.add('card');
@@ -153,7 +164,7 @@
                     css(img, { 'height': '150px', 'width': '150px', 'margin-top': '4px', 'padding': '5px', 'border': '1px solid white', 'border-radius': '50%' });
                     cardContainer.appendChild(img);
                     if (arr[j].name) {
-                        text.innerHTML = arr[j].name;
+                        text.innerHTML = `${arr[j].name} <sub>${arr[j].age}</sub>` ;
                         css(text,
                             {
                                 'color': 'Lightblue',
@@ -237,6 +248,7 @@
             cardsData.push(this);
             console.log(cardsData);
             showRecords(cardsData);
+            cardsData = []
         }        
     </script>
 </body>
